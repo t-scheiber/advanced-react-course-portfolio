@@ -3,12 +3,9 @@ import { useFormik } from "formik";
 import {
   Box,
   Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
   Heading,
   Input,
-  Select,
+  Text,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
@@ -54,30 +51,51 @@ const LandingSection = () => {
         <Box p={6} rounded="md" w="100%">
           <form onSubmit={formik.handleSubmit}>
             <VStack spacing={4}>
-              <FormControl isInvalid={formik.touched.firstName && formik.errors.firstName}>
-                <FormLabel htmlFor="firstName">Name</FormLabel>
+              <Box w="100%">
+                <Text as="label" htmlFor="firstName" display="block" mb={2}>
+                  Name
+                </Text>
                 <Input
                   id="firstName"
                   name="firstName"
                   {...formik.getFieldProps("firstName")}
                 />
-                <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
-              </FormControl>
-              <FormControl isInvalid={formik.touched.email && formik.errors.email}>
-                <FormLabel htmlFor="email">Email Address</FormLabel>
+                {formik.touched.firstName && formik.errors.firstName ? (
+                  <Text mt={2} color="red.300" fontSize="sm">
+                    {formik.errors.firstName}
+                  </Text>
+                ) : null}
+              </Box>
+              <Box w="100%">
+                <Text as="label" htmlFor="email" display="block" mb={2}>
+                  Email Address
+                </Text>
                 <Input
                   id="email"
                   name="email"
                   type="email"
                   {...formik.getFieldProps("email")}
                 />
-                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-              </FormControl>
-              <FormControl>
-                <FormLabel htmlFor="type">Type of enquiry</FormLabel>
-                <Select
+                {formik.touched.email && formik.errors.email ? (
+                  <Text mt={2} color="red.300" fontSize="sm">
+                    {formik.errors.email}
+                  </Text>
+                ) : null}
+              </Box>
+              <Box w="100%">
+                <Text as="label" htmlFor="type" display="block" mb={2}>
+                  Type of enquiry
+                </Text>
+                <Box
+                  as="select"
                   id="type"
                   name="type"
+                  w="100%"
+                  px={4}
+                  py={3}
+                  borderRadius="md"
+                  color="black"
+                  backgroundColor="white"
                   {...formik.getFieldProps("type")}
                 >
                   <option value="hireMe">Freelance project proposal</option>
@@ -85,18 +103,24 @@ const LandingSection = () => {
                     Open source consultancy session
                   </option>
                   <option value="other">Other</option>
-                </Select>
-              </FormControl>
-              <FormControl isInvalid={formik.touched.comment && formik.errors.comment}>
-                <FormLabel htmlFor="comment">Your message</FormLabel>
+                </Box>
+              </Box>
+              <Box w="100%">
+                <Text as="label" htmlFor="comment" display="block" mb={2}>
+                  Your message
+                </Text>
                 <Textarea
                   id="comment"
                   name="comment"
                   height={250}
                   {...formik.getFieldProps("comment")}
                 />
-                <FormErrorMessage>{formik.errors.comment}</FormErrorMessage>
-              </FormControl>
+                {formik.touched.comment && formik.errors.comment ? (
+                  <Text mt={2} color="red.300" fontSize="sm">
+                    {formik.errors.comment}
+                  </Text>
+                ) : null}
+              </Box>
               <Button type="submit" colorScheme="purple" width="full" isLoading={isLoading}>
                 Submit
               </Button>
