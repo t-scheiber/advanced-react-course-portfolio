@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -11,29 +11,31 @@ import { Box, HStack } from "@chakra-ui/react";
 
 const socials = [
   {
-    icon: faEnvelope,
-    url: "mailto: hello@thomasscheiber.com",
+    icon: faEnvelope, label: "Email",
+    url: "mailto:hello@thomasscheiber.com",
   },
   {
-    icon: faGithub,
+    icon: faGithub, label: "GitHub",
     url: "https://github.com/",
   },
   {
-    icon: faLinkedin,
+    icon: faLinkedin, label: "LinkedIn",
     url: "https://www.linkedin.com",
   },
   {
-    icon: faMedium,
+    icon: faMedium, label: "Medium",
     url: "https://medium.com",
   },
   {
-    icon: faStackOverflow,
+    icon: faStackOverflow, label: "Stack Overflow",
     url: "https://stackoverflow.com",
   },
 ];
 
 const Header = () => {
-  const handleClick = (anchor) => () => {
+  /** @param {string} anchor */
+  const handleClick = (anchor) => (/** @type {import("react").MouseEvent<HTMLAnchorElement>} */ event) => {
+    event.preventDefault();
     const id = `${anchor}-section`;
     const element = document.getElementById(id);
     if (element) {
@@ -50,7 +52,7 @@ const Header = () => {
       top={0}
       left={0}
       right={0}
-      translateY={0}
+      translateY="0"
       transitionProperty="transform"
       transitionDuration=".3s"
       transitionTimingFunction="ease-in-out"
@@ -58,24 +60,26 @@ const Header = () => {
     >
       <Box color="white" maxWidth="1280px" margin="0 auto">
         <HStack
-          px={16}
+          px={{ base: 4, md: 16 }}
+          flexDirection={{ base: "column", md: "row" }}
+          gap={{ base: 3, md: 0 }}
           py={4}
           justifyContent="space-between"
           alignItems="center"
         >
           <nav>
-            <HStack spacing={6}>
+            <HStack gap={{ base: 4, md: 6 }}>
             {socials.map((social) => (
-              <a href={social.url}>
+              <a key={social.label} href={social.url} aria-label={social.label}>
                 <FontAwesomeIcon icon={social.icon} size="2x"/> 
               </a>
             ))}
             </HStack>
           </nav>
           <nav>
-            <HStack spacing={8}>
-              <a href="/#projects-section" onClick={()=>handleClick("projects")}>Projects</a>
-              <a href="/#contactme-section" onClick={()=>handleClick("contactme")}>Contact Me</a>
+            <HStack gap={8}>
+              <a href="#projects-section" onClick={handleClick("projects")}>Projects</a>
+              <a href="#contactme-section" onClick={handleClick("contactme")}>Contact Me</a>
             </HStack>
           </nav>
         </HStack>

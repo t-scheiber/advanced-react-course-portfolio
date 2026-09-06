@@ -1,4 +1,8 @@
 import {
+  DialogTitle,
+  DialogCloseTrigger,
+  Button,
+  DialogDescription,
   DialogBackdrop,
   DialogBody,
   DialogContent,
@@ -17,6 +21,7 @@ function Alert() {
 
   return (
     <DialogRoot
+      role="alertdialog"
       open={isOpen}
       onOpenChange={(details) => {
         if (!details.open) {
@@ -28,9 +33,9 @@ function Alert() {
       <DialogPositioner>
         <DialogContent py={4} backgroundColor={isSuccess ? "#81C784" : "#FF8A65"}>
           <DialogHeader fontSize="lg" fontWeight="bold">
-            {isSuccess ? "All good!" : "Oops!"}
+            <DialogTitle>{isSuccess ? "All good!" : "Oops!"}</DialogTitle>
           </DialogHeader>
-          <DialogBody>{message}</DialogBody>
+          <DialogBody><DialogDescription>{message}</DialogDescription><DialogCloseTrigger asChild><Button mt={4}>Close</Button></DialogCloseTrigger></DialogBody>
         </DialogContent>
       </DialogPositioner>
     </DialogRoot>

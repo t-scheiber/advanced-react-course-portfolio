@@ -15,10 +15,10 @@ const LandingSection = () => (
     isDarkBackground
     backgroundColor="#2A4365"
   >
-    <VStack spacing={8}>
-    <VStack spacing={3}>
+    <VStack gap={8}>
+    <VStack gap={3}>
 
-<Avatar name="Thomas Scheiber" src="https://www.gravatar.com/avatar/435cf21933936cc88a53dfa5e5a37ac7f9ad92dab7a5f9bccd3a3771fcd1cc65" size="2xl"/>
+<Avatar.Root size="2xl"><Avatar.Fallback name="Thomas Scheiber" /><Avatar.Image src="https://www.gravatar.com/avatar/435cf21933936cc88a53dfa5e5a37ac7f9ad92dab7a5f9bccd3a3771fcd1cc65" alt="Thomas Scheiber" /></Avatar.Root>
 <Heading size="md">{greeting}</Heading>
     </VStack>
 <Heading size="2xl">{bio1}</Heading>
