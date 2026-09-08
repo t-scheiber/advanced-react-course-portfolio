@@ -15,19 +15,20 @@ import useSubmit from "../hooks/useSubmit";
 import { useAlertContext } from "../context/alertContext";
 
 const LandingSection = () => {
-  const { isLoading, response, submit } = useSubmit();
+  const { isLoading, submit } = useSubmit();
   const { onOpen } = useAlertContext();
 
   const formik = useFormik({
     initialValues: {
       firstName: "",
       email: "",
-      type: "",
+      type: "hireMe",
       comment: "",
     },
-    onSubmit: (values) => {
-      submit(values.firstName);
-      formik.resetForm();
+    onSubmit: async (values) => {
+      const result = await submit(values);
+      onOpen(result.type, result.message);
+      if (result.type === "success") formik.resetForm();
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required("Required"),
@@ -42,22 +43,19 @@ const LandingSection = () => {
       isDarkBackground
       backgroundColor="#512DA8"
       py={16}
-      spacing={8}
+      gap={8}
     >
-      <VStack w="1024px" p={32} alignItems="flex-start">
+      <VStack w="min(1024px, 100vw)" p={{ base: 6, md: 32 }} alignItems="flex-start">
         <Heading as="h1" id="contactme-section">
           Contact me
         </Heading>
         <Box p={6} rounded="md" w="100%">
           <form onSubmit={formik.handleSubmit}>
-            <VStack spacing={4}>
+            <VStack gap={4}>
               <Box w="100%">
-                <Text as="label" htmlFor="firstName" display="block" mb={2}>
-                  Name
-                </Text>
+                <Text asChild display="block" mb={2}><label htmlFor="firstName">Name</label></Text>
                 <Input
                   id="firstName"
-                  name="firstName"
                   {...formik.getFieldProps("firstName")}
                 />
                 {formik.touched.firstName && formik.errors.firstName ? (
@@ -67,12 +65,9 @@ const LandingSection = () => {
                 ) : null}
               </Box>
               <Box w="100%">
-                <Text as="label" htmlFor="email" display="block" mb={2}>
-                  Email Address
-                </Text>
+                <Text asChild display="block" mb={2}><label htmlFor="email">Email Address</label></Text>
                 <Input
                   id="email"
-                  name="email"
                   type="email"
                   {...formik.getFieldProps("email")}
                 />
@@ -83,13 +78,10 @@ const LandingSection = () => {
                 ) : null}
               </Box>
               <Box w="100%">
-                <Text as="label" htmlFor="type" display="block" mb={2}>
-                  Type of enquiry
-                </Text>
+                <Text asChild display="block" mb={2}><label htmlFor="type">Type of enquiry</label></Text>
                 <Box
                   as="select"
                   id="type"
-                  name="type"
                   w="100%"
                   px={4}
                   py={3}
@@ -106,12 +98,9 @@ const LandingSection = () => {
                 </Box>
               </Box>
               <Box w="100%">
-                <Text as="label" htmlFor="comment" display="block" mb={2}>
-                  Your message
-                </Text>
+                <Text asChild display="block" mb={2}><label htmlFor="comment">Your message</label></Text>
                 <Textarea
                   id="comment"
-                  name="comment"
                   height={250}
                   {...formik.getFieldProps("comment")}
                 />
@@ -121,7 +110,7 @@ const LandingSection = () => {
                   </Text>
                 ) : null}
               </Box>
-              <Button type="submit" colorScheme="purple" width="full" isLoading={isLoading}>
+              <Button type="submit" colorPalette="purple" width="full" loading={isLoading} loadingText="Submit">
                 Submit
               </Button>
             </VStack>
