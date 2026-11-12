@@ -1,5 +1,5 @@
 # Advanced React course portfolio
-A course exercise from the Advanced React course in the Meta Front-End Developer certificate on Coursera, done in 2023 to 2024. It is not the owner's real portfolio.
+A course exercise from the Advanced React course in the Meta Front-End Developer certificate on Coursera, done in 2023 to 2024. It is not my real portfolio.
 
 The deployed copy is at https://advanced-react-course-portfolio.thomasscheiber.com/
 
